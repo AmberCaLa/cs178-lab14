@@ -110,7 +110,7 @@ def viewprices(price):
     """, (str(price),))
     return display_html(rows)
 
-@app.route("greatertimes/<time>")
+@app.route("/greatertimes/<time>")
 def greater_times(time):
     """
     Returns all tracks with a run time greater then
