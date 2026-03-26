@@ -110,22 +110,19 @@ def viewprices(price):
     """, (str(price),))
     return display_html(rows)
 
-@app.route("/greatertimes/<time>")
-def greater_times(time):
-    """
-    Returns all tracks with a run time greater then
-    milliseconds given
-    """
+@app.route("/timequery/<time>")
+def viewtime(time):
     rows = execute_query("""
-        SELECT Track.Name
+        SELECT ArtistId, Artist.Name, Track.Name, UnitPrice, Milliseconds
         FROM Artist
         JOIN Album USING (ArtistID)
         JOIN Track USING (AlbumID)
-        WHERE Milliseconds = %s
-        """,
-        (time, )
-        )
+        WHERE Milliseconds > %s
+        ORDER BY Milliseconds DESC
+        LIMIT 500
+    """, (str(time),))
     return display_html(rows)
+
 
 # TODO: Section 3 — add your /pricequerytextbox GET and POST routes here
 @app.route("/pricequerytextbox", methods=['GET'])
@@ -153,7 +150,7 @@ def time_form():
 @app.route("/timequerytextbox", methods=['POST'])
 def time_form_post():
     text = request.form['text']
-    return greater_times(text)
+    return viewtime(text)
 
 # ---------------------------------------------------------------------------
 # Run the app
