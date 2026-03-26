@@ -76,7 +76,7 @@ def viewdb():
 
 
 # TODO: Section 2 — add your /artistquery/<artist_id> route here
-@app.route("/artistquert/<artist_id>")
+@app.route("/artistquery/<artist_id>")
 def artist_query(artist_id):
     """
     Fetches all tracks by a specific artist
