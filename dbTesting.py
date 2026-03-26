@@ -8,7 +8,7 @@ def get_connection():
         host=creds.host,
         user=creds.user,
         password=creds.password,
-        db=creds.db
+        db=creds.database
     )
 
 def execute_query(query, args=()):
