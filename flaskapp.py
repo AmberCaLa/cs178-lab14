@@ -82,7 +82,7 @@ def artist_query(artist_id):
     Fetches all tracks by a specific artist
     Route: /artistquery/<artist_id>
     """
-    rows = execute_query(""""
+    rows = execute_query("""
             SELECT Track.Name 
             FROM Artist 
             JOIN Album USING (ArtistID) 
