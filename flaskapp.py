@@ -92,6 +92,24 @@ def artist_query(artist_id):
         )
     return display_html(rows)
 
+@app.route("/pricequery/<price>")
+def viewprices(price):
+    """
+    Returns all tracks where UnitPrice matches the given price.
+    Can be called from the URL directly (/pricequery/1.99)
+    or from the POST form handler above.
+    """
+    rows = execute_query("""
+        SELECT ArtistId, Artist.Name, Track.Name, UnitPrice, Milliseconds
+        FROM Artist
+        JOIN Album USING (ArtistID)
+        JOIN Track USING (AlbumID)
+        WHERE UnitPrice = %s
+        ORDER BY Track.Name
+        LIMIT 500
+    """, (str(price),))
+    return display_html(rows)
+
 # TODO: Section 3 — add your /pricequerytextbox GET and POST routes here
 @app.route("/pricequerytextbox", methods=['GET'])
 def price_form():
@@ -111,23 +129,6 @@ def price_form_post():
     return viewprices(text)
 
 # TODO: Section 3 — add your /timequerytextbox GET and POST routes here
-@app.route("/pricequery/<price>")
-def viewprices(price):
-    """
-    Returns all tracks where UnitPrice matches the given price.
-    Can be called from the URL directly (/pricequery/1.99)
-    or from the POST form handler above.
-    """
-    rows = execute_query("""
-        SELECT ArtistId, Artist.Name, Track.Name, UnitPrice, Milliseconds
-        FROM Artist
-        JOIN Album USING (ArtistID)
-        JOIN Track USING (AlbumID)
-        WHERE UnitPrice = %s
-        ORDER BY Track.Name
-        LIMIT 500
-    """, (str(price),))
-    return display_html(rows)
 
 
 # ---------------------------------------------------------------------------
